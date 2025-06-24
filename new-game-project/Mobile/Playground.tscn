@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://k07vuc3uf6am"]
+
+[ext_resource type="Texture2D" uid="uid://d37iclp6n3i0f" path="res://icon.svg" id="1_1d6lb"]
+[ext_resource type="PackedScene" uid="uid://bj188xs7vb0mp" path="res://Mobile/Tux/tuxPlayer.tscn" id="2_kiwbl"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kiwbl"]
+albedo_texture = ExtResource("1_1d6lb")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_7o1gt"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_kiwbl"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1000, 0, 0, 0, 1000, 0, 0, 0, 1000, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_kiwbl")
+mesh = SubResource("PlaneMesh_7o1gt")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+collision_layer = 255
+collision_mask = 255
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("WorldBoundaryShape3D_kiwbl")
+
+[node name="Node3D" parent="." instance=ExtResource("2_kiwbl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.255059, 21.4728, -1.05793)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.0506462, 0.223552, -0.973375, -0.483926, 0.847075, 0.219725, 0.873642, 0.48217, 0.0652816, 0, 707.823, 0)
