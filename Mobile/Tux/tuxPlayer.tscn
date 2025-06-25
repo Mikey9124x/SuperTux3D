@@ -1,0 +1,41 @@
+[gd_scene load_steps=8 format=3 uid="uid://bj188xs7vb0mp"]
+
+[ext_resource type="Script" uid="uid://dm5id166iuu2t" path="res://Mobile/Tux/Scripts/tuxController.gd" id="1_fr0t1"]
+[ext_resource type="Texture2D" uid="uid://d37iclp6n3i0f" path="res://icon.svg" id="1_v4y3s"]
+[ext_resource type="Script" uid="uid://b8ji6xbbm485y" path="res://Mobile/Tux/cameraController.gd" id="3_m6ys3"]
+[ext_resource type="Script" uid="uid://cwmw2tid8bvx5" path="res://Mobile/Tux/Camera2.gd" id="3_qcp52"]
+[ext_resource type="ArrayMesh" uid="uid://k8er42ouwh8w" path="res://Tux.obj" id="4_qcp52"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7fi52"]
+radius = 0.341115
+height = 0.978152
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mh63b"]
+albedo_texture = ExtResource("1_v4y3s")
+
+[node name="tux" type="Node3D"]
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+axis_lock_angular_x = true
+axis_lock_angular_z = true
+script = ExtResource("1_fr0t1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0153294)
+shape = SubResource("CapsuleShape3D_7fi52")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
+transform = Transform3D(-9.61651e-09, 0, 0.22, 0, 0.22, 0, -0.22, 0, -9.61651e-09, 0, 0.0552412, 0)
+material_override = SubResource("StandardMaterial3D_mh63b")
+mesh = ExtResource("4_qcp52")
+
+[node name="Axis" type="Node3D" parent="CharacterBody3D"]
+
+[node name="x" type="Node3D" parent="CharacterBody3D/Axis"]
+script = ExtResource("3_qcp52")
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D/Axis/x"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.786, 0.74)
+script = ExtResource("3_m6ys3")
+
+[node name="Node3D" type="Node3D" parent="CharacterBody3D/Axis/x"]
