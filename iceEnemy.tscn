@@ -1,26 +1,57 @@
-[gd_scene load_steps=4 format=3 uid="uid://dj52tkp8jsgpi"]
+[gd_scene load_steps=9 format=3 uid="uid://dj52tkp8jsgpi"]
 
+[ext_resource type="Texture2D" uid="uid://2a1clygu6ap2" path="res://ice.png" id="1_cxia8"]
 [ext_resource type="Script" uid="uid://45tijcxdwly" path="res://iceCubeEnemy.gd" id="1_tf4qp"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_cxia8"]
+[ext_resource type="Texture2D" uid="uid://bn1tcvmmnsrf1" path="res://iceFaCE.png" id="3_nt0bk"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nt0bk"]
 
-[node name="EnemyIce" type="Node3D"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_0evk4"]
+size = Vector3(1.00684, 1.08386, 1)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_cxia8")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xpl2f"]
+albedo_texture = ExtResource("1_cxia8")
 
-[node name="RigidBody3D" type="RigidBody3D" parent="."]
+[sub_resource type="BoxMesh" id="BoxMesh_cxia8"]
+lightmap_size_hint = Vector2i(14, 21)
+add_uv2 = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_521xo"]
+
+[node name="RigidBody3D" type="RigidBody3D"]
+collision_layer = 9
+collision_mask = 9
 script = ExtResource("1_tf4qp")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1.6, 0, 0, 0, -0.026444, 1.59978, 0, -1.59978, -0.026444, 0, 0.516066, -0.00123584)
+texture = ExtResource("3_nt0bk")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_nt0bk")
 
-[node name="Target1" type="Node3D" parent="RigidBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.6736, 0.532291, 0)
-top_level = true
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000401795, 0.00656033, -0.00079751)
+collision_layer = 6
+collision_mask = 6
 
-[node name="Target2" type="Node3D" parent="RigidBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.0356, 0.542886, 0)
-top_level = true
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00341797, 0.0419312, 0)
+shape = SubResource("BoxShape3D_0evk4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+layers = 9
+material_override = SubResource("StandardMaterial3D_xpl2f")
+mesh = SubResource("BoxMesh_cxia8")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_521xo")
+
+[node name="EnemyIce" type="Node3D" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="Timer" to="Sprite3D" method="_on_timer_timeout"]

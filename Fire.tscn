@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://ctxbv1e3qcgya"]
+
+[ext_resource type="Texture2D" uid="uid://dlt8vsbjn1uam" path="res://FIRE.png" id="1_a1sx3"]
+[ext_resource type="Script" uid="uid://cbka4dkhdkwe5" path="res://Fire.gd" id="2_p7d3r"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_p7d3r"]
+size = Vector3(0.516724, 0.579468, 0.512939)
+
+[node name="Sprite3D" type="Sprite3D"]
+billboard = 1
+texture = ExtResource("1_a1sx3")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 9
+collision_mask = 5
+script = ExtResource("2_p7d3r")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00592041, -0.0252075, -0.00280762)
+shape = SubResource("BoxShape3D_p7d3r")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Area3D"]
+collision_layer = 8
+collision_mask = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00592041, -0.0252075, -0.00280762)
+shape = SubResource("BoxShape3D_p7d3r")
+
+[connection signal="area_entered" from="Area3D" to="Area3D" method="_on_area_entered"]

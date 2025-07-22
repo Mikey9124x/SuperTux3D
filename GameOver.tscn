@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://y7vqc6j40yqq"]
+
+[ext_resource type="Script" uid="uid://essei6ksn7a2" path="res://button.gd" id="1_40baj"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_4g1ep"]
+font_size = 300
+
+[node name="Over" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(1, 0, 0, 1)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1079.0
+text = "GAME OVER"
+label_settings = SubResource("LabelSettings_4g1ep")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_top = 916.0
+offset_right = 1920.0
+offset_bottom = 1061.0
+theme_override_font_sizes/font_size = 100
+text = "Quit"
+script = ExtResource("1_40baj")
+
+[connection signal="pressed" from="Button" to="Button" method="_on_pressed"]

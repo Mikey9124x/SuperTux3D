@@ -1,0 +1,36 @@
+[gd_scene load_steps=4 format=3 uid="uid://dvmjg7ny8fj4h"]
+
+[ext_resource type="PackedScene" uid="uid://smk7oalhlb17" path="res://ice_cube.tscn" id="1_xm50o"]
+[ext_resource type="Script" uid="uid://cvxh7r8j1qyia" path="res://WinDetector.gd" id="2_wwt5c"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wwt5c"]
+size = Vector3(13.8005, 8.91516, 12.5455)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="StaticBody3D2" parent="." instance=ExtResource("1_xm50o")]
+transform = Transform3D(10, 0, 0, 0, 7, 0, 0, 0, 1, -0.104309, 0, 0.173584)
+
+[node name="StaticBody3D3" parent="." instance=ExtResource("1_xm50o")]
+transform = Transform3D(-4.37114e-07, 0, 1, 0, 7, 0, -10, 0, -4.37114e-08, -5.6204, 0, 5.10547)
+
+[node name="StaticBody3D4" parent="." instance=ExtResource("1_xm50o")]
+transform = Transform3D(-4.37114e-07, 0, 1, 0, 7, 0, -10, 0, -4.37114e-08, 4.8514, 0, 5.10547)
+
+[node name="StaticBody3D5" parent="." instance=ExtResource("1_xm50o")]
+transform = Transform3D(10, 0, 0, 0, 7, 0, 0, 0, 1, -0.104309, 0, 10.2818)
+
+[node name="StaticBody3D6" parent="." instance=ExtResource("1_xm50o")]
+transform = Transform3D(-4.37114e-07, 11.495, -4.37114e-08, 0, -5.02462e-07, -1, -10, -5.02462e-07, 1.91069e-15, -0.585247, 3.71228, 5.10547)
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("2_wwt5c")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0289307, 0.41803, 5.13754)
+shape = SubResource("BoxShape3D_wwt5c")
+
+[connection signal="area_entered" from="Area3D" to="Area3D" method="_on_area_entered"]
+[connection signal="body_entered" from="Area3D" to="Area3D" method="_on_body_entered"]

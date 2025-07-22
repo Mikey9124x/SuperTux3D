@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://de2awtxryqcmw"]
+
+[ext_resource type="Texture2D" uid="uid://b2pr4gx83f6v1" path="res://Coin.png" id="1_d5gmh"]
+[ext_resource type="Script" uid="uid://bi3qd2td7i3aa" path="res://Coin.gd" id="2_0t63x"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0t63x"]
+albedo_texture = ExtResource("1_d5gmh")
+billboard_mode = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_v7riw"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_v7riw"]
+
+[node name="Coin" type="MeshInstance3D"]
+material_override = SubResource("StandardMaterial3D_0t63x")
+mesh = SubResource("QuadMesh_v7riw")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 16
+collision_mask = 16
+script = ExtResource("2_0t63x")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_v7riw")
+
+[connection signal="area_entered" from="Area3D" to="Area3D" method="_on_area_entered"]

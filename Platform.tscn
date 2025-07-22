@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://btxdj85nm3v7r"]
+
+[ext_resource type="Texture2D" uid="uid://2a1clygu6ap2" path="res://ice.png" id="1_ibub6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ibub6"]
+albedo_texture = ExtResource("1_ibub6")
+texture_filter = 0
+point_size = 128.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_7gn3u"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ibub6"]
+
+[node name="MeshInstance3D" type="MeshInstance3D"]
+transform = Transform3D(20, 0, 0, 0, 1, 0, 0, 0, 20, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_ibub6")
+mesh = SubResource("BoxMesh_7gn3u")
+skeleton = NodePath("../CollisionShape3D")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_ibub6")

@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=3 uid="uid://cdcbohb2yderb"]
+
+[ext_resource type="Texture2D" uid="uid://by4rys5h8nyy2" path="res://mountains.png" id="1_qoqlk"]
+[ext_resource type="FontFile" path="res://fonts/poco/Poco.tres" id="2_iwfq2"]
+[ext_resource type="Script" uid="uid://bd67vat47rtwl" path="res://MainMenu.gd" id="3_7r1g0"]
+[ext_resource type="Script" uid="uid://essei6ksn7a2" path="res://button.gd" id="4_cqjrg"]
+[ext_resource type="AudioStream" uid="uid://b881aa57otk6q" path="res://intro.ogg" id="5_iwfq2"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Mountains" type="Sprite2D" parent="."]
+position = Vector2(954, 543)
+texture = ExtResource("1_qoqlk")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 480.0
+offset_top = 562.0
+offset_right = 1440.0
+offset_bottom = 697.0
+theme_override_fonts/font = ExtResource("2_iwfq2")
+theme_override_font_sizes/font_size = 71
+text = "Play"
+script = ExtResource("3_7r1g0")
+
+[node name="Button2" type="Button" parent="."]
+layout_mode = 0
+offset_left = 480.0
+offset_top = 706.0
+offset_right = 1440.0
+offset_bottom = 851.0
+theme_override_fonts/font = ExtResource("2_iwfq2")
+theme_override_font_sizes/font_size = 100
+text = "Quit"
+script = ExtResource("4_cqjrg")
+
+[node name="Intro" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_iwfq2")
+volume_db = 15.841
+autoplay = true
+parameters/looping = true
+
+[connection signal="pressed" from="Button" to="Button" method="_on_pressed"]
+[connection signal="pressed" from="Button2" to="Button2" method="_on_pressed"]
