@@ -1,33 +1,46 @@
-[gd_scene load_steps=8 format=3 uid="uid://bj188xs7vb0mp"]
+[gd_scene load_steps=15 format=3 uid="uid://bj188xs7vb0mp"]
 
 [ext_resource type="Script" uid="uid://dm5id166iuu2t" path="res://Mobile/Tux/Scripts/tuxController.gd" id="1_fr0t1"]
-[ext_resource type="Texture2D" uid="uid://d37iclp6n3i0f" path="res://icon.svg" id="1_v4y3s"]
+[ext_resource type="Texture2D" uid="uid://cc0s0t2viboct" path="res://tux.png" id="2_rbkxq"]
+[ext_resource type="ArrayMesh" uid="uid://w4503rq8725b" path="res://tux.obj" id="3_emshh"]
 [ext_resource type="Script" uid="uid://b8ji6xbbm485y" path="res://Mobile/Tux/cameraController.gd" id="3_m6ys3"]
 [ext_resource type="Script" uid="uid://cwmw2tid8bvx5" path="res://Mobile/Tux/Camera2.gd" id="3_qcp52"]
-[ext_resource type="ArrayMesh" uid="uid://k8er42ouwh8w" path="res://Tux.obj" id="4_qcp52"]
+[ext_resource type="Script" uid="uid://b0c1lombve71j" path="res://Mobile/Tux/recharge.gd" id="6_mv7v7"]
+[ext_resource type="Script" uid="uid://cmxrt81jfelpn" path="res://Mobile/Tux/timerAttack.gd" id="6_rl4mg"]
+[ext_resource type="Script" uid="uid://dfx6kuese1wxh" path="res://Mobile/Tux/health.gd" id="8_rbkxq"]
+[ext_resource type="AudioStream" uid="uid://cai5r410f11nr" path="res://coin.wav" id="9_emshh"]
+[ext_resource type="Script" uid="uid://cd14qim686mv4" path="res://Mobile/Tux/coins.gd" id="10_8r0it"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7fi52"]
-radius = 0.341115
-height = 0.978152
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qcp52"]
+radius = 0.331735
+height = 0.979319
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mh63b"]
-albedo_texture = ExtResource("1_v4y3s")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8r0it"]
+albedo_texture = ExtResource("2_rbkxq")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mv7v7"]
+radius = 0.360297
+height = 0.897279
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rbkxq"]
 
 [node name="tux" type="Node3D"]
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+collision_layer = 2
+collision_mask = 7
 axis_lock_angular_x = true
 axis_lock_angular_z = true
 script = ExtResource("1_fr0t1")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+[node name="Player Collider" type="CollisionShape3D" parent="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0153294)
-shape = SubResource("CapsuleShape3D_7fi52")
+shape = SubResource("CapsuleShape3D_qcp52")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
+[node name="Tux Mesh" type="MeshInstance3D" parent="CharacterBody3D"]
 transform = Transform3D(-9.61651e-09, 0, 0.22, 0, 0.22, 0, -0.22, 0, -9.61651e-09, 0, 0.0552412, 0)
-material_override = SubResource("StandardMaterial3D_mh63b")
-mesh = ExtResource("4_qcp52")
+material_override = SubResource("StandardMaterial3D_8r0it")
+mesh = ExtResource("3_emshh")
 
 [node name="Axis" type="Node3D" parent="CharacterBody3D"]
 
@@ -39,3 +52,86 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.786, 0.74)
 script = ExtResource("3_m6ys3")
 
 [node name="Node3D" type="Node3D" parent="CharacterBody3D/Axis/x"]
+
+[node name="Timer" type="Timer" parent="CharacterBody3D"]
+one_shot = true
+script = ExtResource("6_rl4mg")
+
+[node name="Recharge" type="ProgressBar" parent="CharacterBody3D/Timer"]
+offset_right = 387.0
+offset_bottom = 102.0
+max_value = 0.5
+script = ExtResource("6_mv7v7")
+
+[node name="Label" type="Label" parent="CharacterBody3D/Timer/Recharge"]
+layout_mode = 0
+offset_top = 79.0
+offset_right = 387.0
+offset_bottom = 102.0
+text = "Recharge"
+horizontal_alignment = 1
+
+[node name="Health" type="ProgressBar" parent="CharacterBody3D"]
+offset_left = 1533.0
+offset_right = 1920.0
+offset_bottom = 102.0
+value = 100.0
+script = ExtResource("8_rbkxq")
+
+[node name="Label" type="Label" parent="CharacterBody3D/Health"]
+layout_mode = 0
+offset_top = 79.0
+offset_right = 387.0
+offset_bottom = 102.0
+text = "Health"
+horizontal_alignment = 1
+
+[node name="Area3D" type="Area3D" parent="CharacterBody3D"]
+collision_layer = 8
+collision_mask = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D/Area3D"]
+shape = SubResource("CapsuleShape3D_mv7v7")
+
+[node name="Label" type="Label" parent="CharacterBody3D"]
+offset_left = 1533.0
+offset_top = 947.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+text = "E To Throw Snowball
+Space To Jump
+Wasd or arrow keys to move
+Scrollwheel To Zoom
+Left Control To Crouch"
+horizontal_alignment = 1
+
+[node name="Area3D2" type="Area3D" parent="CharacterBody3D"]
+collision_layer = 16
+collision_mask = 16
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D/Area3D2"]
+shape = SubResource("CapsuleShape3D_rbkxq")
+
+[node name="Coin" type="AudioStreamPlayer" parent="CharacterBody3D"]
+stream = ExtResource("9_emshh")
+volume_db = 15.841
+
+[node name="Coins" type="ProgressBar" parent="CharacterBody3D"]
+offset_top = 102.0
+offset_right = 387.0
+offset_bottom = 204.0
+script = ExtResource("10_8r0it")
+
+[node name="Label" type="Label" parent="CharacterBody3D/Coins"]
+layout_mode = 0
+offset_top = 79.0
+offset_right = 387.0
+offset_bottom = 102.0
+text = "Coins"
+horizontal_alignment = 1
+
+[connection signal="attacked" from="CharacterBody3D" to="CharacterBody3D/Timer" method="_on_character_body_3d_attacked"]
+[connection signal="child_entered_tree" from="CharacterBody3D" to="CharacterBody3D/Timer" method="_on_character_body_3d_child_entered_tree"]
+[connection signal="timeout" from="CharacterBody3D/Timer" to="CharacterBody3D" method="_on_timer_timeout"]
+[connection signal="body_entered" from="CharacterBody3D/Area3D" to="CharacterBody3D" method="_on_area_3d_body_entered"]
+[connection signal="area_entered" from="CharacterBody3D/Area3D2" to="CharacterBody3D" method="_on_area_3d_2_area_entered"]
